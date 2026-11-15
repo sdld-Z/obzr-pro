@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентация проекта ОБЖ.ПРО | Забродин Илья 10А</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Библиотека для генерации настоящего файла PowerPoint (.pptx) -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #060911; color: #f8fafc; overflow: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
+        .slide-enter { animation: slideIn 0.35s ease-out forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.98) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col justify-between select-none">
+
+    <!-- Верхняя панель управления -->
+    <header class="h-16 px-6 glass flex items-center justify-between z-20 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-shield-halved text-white"></i>
+            </div>
+            <div>
+                <span class="font-bold text-sm text-white">Презентация проекта «ОБЖ.ПРО»</span>
+                <span class="text-xs text-slate-400 ml-2 hidden sm:inline">| Забродин И. Е. (10 «А»)</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <span id="slide-counter" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300">
+                Слайд 1 / 16
+            </span>
+            <button onclick="exportToPPTX()" id="pptx-btn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-orange-500/20 transition flex items-center gap-2">
+                <i class="fa-solid fa-file-powerpoint"></i>
+                <span>Скачать PowerPoint (.pptx)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Область слайда -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-8 relative overflow-y-auto">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div id="slide-container" class="max-w-5xl w-full min-h-[480px] glass rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col justify-between relative z-10">
+            <!-- Контент генерируется через JS -->
+        </div>
+    </main>
+
+    <!-- Нижняя панель навигации -->
+    <footer class="h-16 px-6 glass flex items-center justify-between z-20 border-t border-slate-800">
+        <button onclick="prevSlide()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Назад
+        </button>
+        <div class="text-xs text-slate-400 hidden md:block">
+            Используйте клавиши <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">←</kbd> и <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">→</kbd> для переключения слайдов
+        </div>
+        <button onclick="nextSlide()" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold transition flex items-center gap-2">
+            Вперед <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </footer>
+
+    <script>
+        const slides = [
+            {
+                badge: "Итоговый индивидуальный проект",
+                title: "Интерактивный образовательный веб-портал «ОБЖ.ПРО»",
+                subtitle: "Алгоритмы действий в чрезвычайных ситуациях с системой интерактивного тестирования",
+                isTitle: true,
+                author: "Забродин Илья Егорович (Забродин И. Е.), 10 «А» класс",
+                supervisor: "Маклакова Инна Анатольевна (Маклакова И. А.)"
+            },
+            {
+                badge: "Пункт 2 • Целеполагание",
+                title: "Цель работы и актуальность проекта",
+                cards: [
+                    { head: "🔥 Актуальность проблемы", text: "В современных условиях появились новые виды угроз (атаки БПЛА, вооруженные провокации, паводки). При этом классические бумажные памятки на школьных стендах игнорируются большинством подростков." },
+                    { head: "🎯 Цель работы", text: "Разработать современный, наглядный и доступный интерактивный веб-сайт по курсу ОБЖ (ОБЗР), содержащий пошаговые алгоритмы выживания в опасных ситуациях и систему тестирования для самопроверки знаний." }
+                ]
+            },
+            {
+                badge: "Пункт 3 • План действий",
+                title: "Задачи проекта",
+                list: [
+                    "Изучить официальные методические рекомендации МЧС России и актуальную программу курса ОБЖ (ОБЗР).",
+                    "Провести социологический опрос среди учащихся 7–11 классов для выявления пробелов в знаниях по безопасности.",
+                    "Спроектировать структуру, дизайн и пользовательский интерфейс (UI/UX) образовательного веб-портала.",
+                    "Написать программный код сайта (HTML5, Tailwind CSS, JavaScript) с адаптацией под смартфоны и ПК.",
+                    "Разработать проверочные мини-тесты по каждой теме и интерактивный тренажер «Тревожный чемоданчик».",
+                    "Провести повторное тестирование школьников после запуска сайта и оценить эффективность проекта."
+                ]
+            },
+            {
+                badge: "Пункт 4 • Методология",
+                title: "Объект, предмет и методы исследования",
+                cards: [
+                    { head: "🔍 Объект исследования", text: "Процесс обучения школьников основам безопасности жизнедеятельности и алгоритмам поведения в ЧС." },
+                    { head: "💻 Предмет исследования", text: "Интерактивные веб-технологии и геймификация как инструмент повышения эффективности усвоения правил безопасности." },
+                    { head: "📊 Теоретические и эмпирические методы", text: "Анализ рекомендаций МЧС РФ и учебной литературы; анкетирование учащихся 7–11 классов; сравнительный эксперимент." },
+                    { head: "🛠️ Практические методы", text: "Проектирование интерфейса (UI/UX), веб-верстка, программирование на JavaScript, кроссбраузерное тестирование." }
+                ]
+            },
+            {
+                badge: "Пункт 5 • Паспорт проекта",
+                title: "Тип проекта и сроки реализации",
+                cards: [
+                    { head: "📌 По доминирующей деятельности", text: "Практико-ориентированный (прикладной IT-проект)" },
+                    { head: "📚 По предметной области", text: "Межпредметный (ОБЖ / ОБЗР + Информатика и ИКТ)" },
+                    { head: "👤 По количеству участников", text: "Индивидуальный проект" },
+                    { head: "🗓️ Сроки реализации", text: "Среднесрочный: сентябрь 2025 г. — апрель 2026 г. (1 учебный год)" }
+                ]
+            },
+            {
+                badge: "Пункт 6 • Теоретическая часть",
+                title: "Историческая справка: эволюция обучения безопасности",
+                list: [
+                    "1930–1980-е гг. (СССР): программы ПВХО, Гражданской обороны и НВП. Основной носитель знаний — печатные плакаты и бумажные уставы.",
+                    "1991 год: в школах России введен предмет ОБЖ (Основы безопасности жизнедеятельности) при участии МЧС России.",
+                    "2024–2026 гг.: трансформация курса в предмет ОБЗР («Основы безопасности и защиты Родины»), появление модулей защиты от БПЛА.",
+                    "Современный этап: переход от статичных стендов на стене коридора к интерактивным цифровым тренажерам, доступным со смартфона за 2 секунды."
+                ]
+            },
+            {
+                badge: "Пункт 7 • Первичная диагностика",
+                title: "Анализ и результаты опроса (7–11 классы, 80 чел.)",
+                bars: [
+                    { label: "Точно знали алгоритм действий при атаке БПЛА", val: 27, color: "bg-red-500" },
+                    { label: "Знали правила выживания при паводке и радиации", val: 35, color: "bg-orange-500" },
+                    { label: "Признались, что не читают бумажные стенды в школе", val: 64, color: "bg-amber-500" },
+                    { label: "Хотят изучать ОБЖ через интерактивный сайт с тестами", val: 91, color: "bg-emerald-500" }
+                ]
+            },
+            {
+                badge: "Пункт 8 • Финансовое обоснование",
+                title: "Экономический расчет проекта",
+                cards: [
+                    { head: "💻 Программное обеспечение — 0 руб.", text: "Использованы бесплатный редактор VS Code и открытые библиотеки (Tailwind CSS, FontAwesome, Confetti.js)." },
+                    { head: "🌐 Хостинг и публикация — 0 руб.", text: "Размещение на бесплатных образовательных платформах (GitHub Pages / Netlify)." },
+                    { head: "⚡ Электроэнергия — ~36 руб.", text: "30 часов работы компьютера × 0,2 кВт × 6 руб./кВт·ч = 36 рублей." },
+                    { head: "💰 Экономическая выгода — до 40 000 руб.", text: "Заказ аналогичного SPA-портала в коммерческой веб-студии стоил бы школе от 30 000 до 45 000 рублей." }
+                ]
+            },
+            {
+                badge: "Пункт 9 • Этапы выполнения (Слайд 1 из 4)",
+                title: "Этап 1. Подготовительный и аналитический",
+                list: [
+                    "Определение темы, цели и задач проекта совместно с руководителем Маклаковой Инной Анатольевной.",
+                    "Проведение анкетирования учащихся 7–11 классов и выявление самых сложных для запоминания тем.",
+                    "Отбор 7 ключевых разделов: Атака БПЛА, Скулшутинг, Наводнение, Ядерный удар, Пожар, Утечка газа, Первая помощь.",
+                    "Сбор и выверка пошаговых инструкций строго по официальным материалам МЧС России."
+                ]
+            },
+            {
+                badge: "Пункт 9 • Этапы выполнения (Слайд 2 из 4)",
+                title: "Этап 2. Проектирование и UI/UX-дизайн",
+                list: [
+                    "Выбор архитектуры SPA (Single Page Application) — мгновенный переход между темами без перезагрузки браузера.",
+                    "Разработка современного дизайна в стиле Glassmorphism (полупрозрачные карточки на темном фоне Dark UI).",
+                    "Внедрение цветовой индикации: Зеленый — «Что нужно делать», Красный — «Категорически запрещено».",
+                    "Проектирование адаптивной сетки, чтобы сайт одинаково удобно работал на телефоне и компьютере."
+                ]
+            },
+            {
+                badge: "Пункт 9 • Этапы выполнения (Слайд 3 из 4)",
+                title: "Этап 3. Программирование и верстка",
+                list: [
+                    "Семантическая верстка структуры приложения на стандарте HTML5.",
+                    "Стилизация интерфейса и анимаций с помощью CSS-фреймворка Tailwind CSS.",
+                    "Написание логики на языке JavaScript: переключение вкладок сценариев («В здании», «На улице», «На уроке»).",
+                    "Подключение технологии localStorage для автоматического сохранения пройденных учеником тем."
+                ]
+            },
+            {
+                badge: "Пункт 9 • Этапы выполнения (Слайд 4 из 4)",
+                title: "Этап 4. Геймификация, тестирование и запуск",
+                list: [
+                    "Разработка 21 проверочного вопроса (по 3 вопроса в конце каждого из 7 модулей) с разбором ошибок.",
+                    "Создание интерактивного тренажера «Собери тревожный чемоданчик» и экстренной памятки «112 SOS».",
+                    "Настройка динамической шкалы «Готовность к ЧС» в шапке сайта.",
+                    "Тестирование работы портала в разных браузерах и апробация на фокус-группе учеников."
+                ]
+            },
+            {
+                badge: "Пункт 10 • Проблемный анализ",
+                title: "Сложности проекта и пути их решения",
+                cards: [
+                    { head: "📄 Сложность 1: Перегруженность текстов МЧС", text: "Решение: переработка длинных инструкций в короткие карточки «Шаг 1–2–3» с наглядными иконками." },
+                    { head: "📱 Сложность 2: Адаптация под экраны смартфонов", text: "Решение: использование переключаемых вкладок (табов) для разных сценариев внутри одной темы." },
+                    { head: "💾 Сложность 3: Сохранение прогресса без сервера", text: "Решение: использование встроенного хранилища браузера localStorage для запоминания результатов." },
+                    { head: "🎯 Сложность 4: Проверка знаний без стресса", text: "Решение: мгновенное дружелюбное объяснение правильного ответа сразу после клика в тесте." }
+                ]
+            },
+            {
+                badge: "Пункт 11 • Объективная оценка",
+                title: "Плюсы и минусы проекта",
+                cards: [
+                    { head: "➕ Плюсы (Преимущества)", text: "• Охватывает 7 важнейших тем (включая БПЛА, скулшутинг, паводок и радиацию).\n• Интерактивные тесты с объяснением каждого ответа.\n• Мгновенная работа на телефонах и ПК, 0 руб. затрат." },
+                    { head: "➖ Минусы (Точки роста)", text: "• При первом открытии требуется интернет для подгрузки шрифтов и иконок.\n• Пока нет единого кабинета учителя для сбора оценок всего класса (план развития проекта)." }
+                ]
+            },
+            {
+                badge: "Пункт 12 • Эффективность проекта",
+                title: "Анализ после проекта (результаты 7–11 классов)",
+                bars: [
+                    { label: "Усвоение алгоритма действий при атаке БПЛА (было 27%)", val: 94, color: "bg-emerald-500" },
+                    { label: "Правила при вооруженном нападении на школу (было 38%)", val: 96, color: "bg-emerald-500" },
+                    { label: "Алгоритмы при паводке и радиации (было 35%)", val: 89, color: "bg-blue-500" },
+                    { label: "Оценили удобство и пользу сайта на «Отлично»", val: 95, color: "bg-orange-500" }
+                ]
+            },
+            {
+                badge: "Пункт 13 • Итоги работы",
+                title: "Заключение и выводы",
+                list: [
+                    "Поставленная цель достигнута, все 6 задач выполнены: создан функционирующий веб-портал «ОБЖ.ПРО».",
+                    "Практический эксперимент доказал: интерактивный формат с мини-тестами повышает усвоение алгоритмов безопасности более чем в 2,5–3 раза.",
+                    "Продукт полностью готов к использованию на уроках ОБЗР, классных часах и для самостоятельного изучения школьниками.",
+                    "Спасибо за внимание! Готов ответить на ваши вопросы."
+                ]
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function renderSlide() {
+            const s = slides[currentSlide];
+            const container = document.getElementById('slide-container');
+            document.getElementById('slide-counter').textContent = `Слайд ${currentSlide + 1} / ${slides.length}`;
+
+            if (s.isTitle) {
+                container.innerHTML = `
+                    <div class="slide-enter my-auto text-center space-y-6 py-8">
+                        <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/15 text-orange-400 border border-orange-500/30">
+                            ${s.badge}
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight max-w-4xl mx-auto">
+                            ${s.title}
+                        </h1>
+                        <p class="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto">${s.subtitle}</p>
+                        <div class="pt-8 mt-8 border-t border-slate-800/90 flex flex-col sm:flex-row items-center justify-center gap-6 text-left max-w-2xl mx-auto">
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 w-full">
+                                <div class="text-xs text-slate-400 uppercase font-bold">Автор проекта:</div>
+                                <div class="text-sm sm:text-base font-bold text-white mt-1">${s.author}</div>
+                            </div>
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 w-full">
+                                <div class="text-xs text-slate-400 uppercase font-bold">Руководитель проекта:</div>
+                                <div class="text-sm sm:text-base font-bold text-orange-400 mt-1">${s.supervisor}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let bodyHTML = '';
+            if (s.cards) {
+                bodyHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        ${s.cards.map(c => `
+                            <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl">
+                                <h3 class="font-bold text-orange-400 text-base sm:text-lg mb-2">${c.head}</h3>
+                                <p class="text-slate-200 text-xs sm:text-sm leading-relaxed whitespace-pre-line">${c.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (s.list) {
+                bodyHTML = `
+                    <div class="space-y-3 mt-6">
+                        ${s.list.map((item, idx) => `
+                            <div class="bg-slate-900/75 border border-slate-800 p-4 rounded-xl flex items-start gap-4">
+                                <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">
+                                    ${idx + 1}
+                                </span>
+                                <span class="text-slate-200 text-sm sm:text-base">${item}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (s.bars) {
+                bodyHTML = `
+                    <div class="space-y-5 mt-8">
+                        ${s.bars.map(b => `
+                            <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+                                <div class="flex justify-between text-sm font-bold mb-2">
+                                    <span class="text-slate-200">${b.label}</span>
+                                    <span class="text-white text-base">${b.val}%</span>
+                                </div>
+                                <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="${b.color} h-full rounded-full transition-all duration-700" style="width: ${b.val}%"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="slide-enter">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/15 text-orange-400 border border-orange-500/30 mb-3">
+                        ${s.badge}
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">${s.title}</h2>
+                    ${bodyHTML}
+                </div>
+                <div class="pt-6 mt-6 border-t border-slate-800/80 flex justify-between items-center text-xs text-slate-500">
+                    <span>Проект «ОБЖ.ПРО» • Забродин И. Е., 10 «А»</span>
+                    <span>Руководитель: Маклакова И. А.</span>
+                </div>
+            `;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) { currentSlide++; renderSlide(); }
+        }
+        function prevSlide() {
+            if (currentSlide > 0) { currentSlide--; renderSlide(); }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Генерация настоящего файла PowerPoint (.pptx)
+        function exportToPPTX() {
+            const pptx = new PptxGenJS();
+            pptx.layout = 'LAYOUT_16x9';
+            pptx.author = 'Забродин Илья Егорович, 10А';
+            pptx.title = 'Проект ОБЖ.ПРО';
+
+            slides.forEach((s, index) => {
+                const slide = pptx.addSlide();
+                slide.background = { color: '0F172A' };
+
+                // Верхний бейдж
+                slide.addText(s.badge.toUpperCase(), {
+                    x: 0.6, y: 0.4, w: 8.5, h: 0.35,
+                    fontSize: 10, bold: true, color: 'FB923C', fontFace: 'Arial'
+                });
+
+                if (s.isTitle) {
+                    slide.addText(s.title, {
+                        x: 0.6, y: 1.3, w: 8.8, h: 1.4,
+                        fontSize: 28, bold: true, color: 'FFFFFF', fontFace: 'Arial'
+                    });
+                    slide.addText(s.subtitle, {
+                        x: 0.6, y: 2.8, w: 8.5, h: 0.8,
+                        fontSize: 15, color: 'CBD5E1', fontFace: 'Arial'
+                    });
+                    slide.addText(`Выполнил: ${s.author}\nРуководитель проекта: ${s.supervisor}`, {
+                        x: 0.6, y: 4.1, w: 8.8, h: 1.0,
+                        fontSize: 14, bold: true, color: 'F8FAFC', fill: { color: '1E293B' }, margin: 12, fontFace: 'Arial'
+                    });
+                } else {
+                    slide.addText(s.title, {
+                        x: 0.6, y: 0.8, w: 8.8, h: 0.6,
+                        fontSize: 22, bold: true, color: 'FFFFFF', fontFace: 'Arial'
+                    });
+
+                    if (s.cards) {
+                        s.cards.forEach((c, i) => {
+                            const col = i % 2;
+                            const row = Math.floor(i / 2);
+                            const xPos = 0.6 + col * 4.5;
+                            const yPos = 1.6 + row * 1.75;
+                            const height = s.cards.length <= 2 ? 3.2 : 1.6;
+
+                            slide.addText([
+                                { text: c.head + '\n', options: { bold: true, fontSize: 13, color: 'FB923C' } },
+                                { text: c.text, options: { fontSize: 11.5, color: 'E2E8F0' } }
+                            ], {
+                                x: xPos, y: yPos, w: 4.3, h: height,
+                                fill: { color: '1E293B' }, valign: 'top', margin: 10, fontFace: 'Arial'
+                            });
+                        });
+                    } else if (s.list) {
+                        const bulletItems = s.list.map((item, idx) => ({
+                            text: `${idx + 1}. ${item}`,
+                            options: { fontSize: 13, color: 'F1F5F9', breakLine: true, paraSpaceAfter: 10 }
+                        }));
+                        slide.addText(bulletItems, {
+                            x: 0.6, y: 1.6, w: 8.8, h: 3.4,
+                            fill: { color: '1E293B' }, valign: 'top', margin: 14, fontFace: 'Arial'
+                        });
+                    } else if (s.bars) {
+                        s.bars.forEach((b, i) => {
+                            const yPos = 1.6 + i * 0.85;
+                            slide.addText(`${b.label} — ${b.val}%`, {
+                                x: 0.6, y: yPos, w: 8.8, h: 0.35,
+                                fontSize: 12, bold: true, color: 'FFFFFF', fontFace: 'Arial'
+                            });
+                            slide.addShape(pptx.ShapeType.rect, {
+                                x: 0.6, y: yPos + 0.38, w: 8.8, h: 0.22, fill: { color: '1E293B' }
+                            });
+                            slide.addShape(pptx.ShapeType.rect, {
+                                x: 0.6, y: yPos + 0.38, w: (8.8 * b.val) / 100, h: 0.22, fill: { color: '10B981' }
+                            });
+                        });
+                    }
+
+                    // Нижний колонтитул
+                    slide.addText(`Забродин И. Е. (10 «А») | Руководитель: Маклакова И. А. | Слайд ${index + 1}`, {
+                        x: 0.6, y: 5.15, w: 8.8, h: 0.3,
+                        fontSize: 9, color: '64748B', fontFace: 'Arial'
+                    });
+                }
+            });
+
+            pptx.writeFile({ fileName: 'Проект_ОБЖ_Забродин_Илья_10А.pptx' });
+        }
+
+        renderSlide();
+    </script>
+</body>
+</html>
