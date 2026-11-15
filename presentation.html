@@ -22,25 +22,32 @@
 </head>
 <body class="h-screen flex flex-col justify-between select-none">
 
+    <!-- Скрытый input для выбора файла QR-кода -->
+    <input type="file" id="qr-file-input" accept="image/*" class="hidden" onchange="handleQRUpload(event)">
+
     <!-- Верхняя панель управления -->
-    <header class="h-16 px-6 glass flex items-center justify-between z-20 border-b border-slate-800">
+    <header class="h-16 px-4 sm:px-6 glass flex items-center justify-between z-20 border-b border-slate-800 gap-2">
         <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center font-bold">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center font-bold shrink-0">
                 <i class="fa-solid fa-shield-halved text-white"></i>
             </div>
-            <div>
-                <span class="font-bold text-sm text-white">Презентация проекта «ОБЖ.ПРО»</span>
-                <span class="text-xs text-slate-400 ml-2 hidden sm:inline">| Забродин И. Е. (10 «А»)</span>
+            <div class="truncate">
+                <span class="font-bold text-xs sm:text-sm text-white">Презентация «ОБЖ.ПРО»</span>
+                <span class="text-xs text-slate-400 ml-2 hidden md:inline">| Забродин И. Е. (10 «А»)</span>
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
-            <span id="slide-counter" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <span id="slide-counter" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hidden sm:inline-block">
                 Слайд 1 / 16
             </span>
-            <button onclick="exportToPPTX()" id="pptx-btn" class="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-orange-500/20 transition flex items-center gap-2">
+            <button onclick="document.getElementById('qr-file-input').click()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 text-xs font-bold transition flex items-center gap-2" title="Выбрать скачанную картинку QR-кода">
+                <i class="fa-solid fa-qrcode"></i>
+                <span id="qr-btn-text">Прикрепить QR-код</span>
+            </button>
+            <button onclick="exportToPPTX()" id="pptx-btn" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-orange-500/20 transition flex items-center gap-2">
                 <i class="fa-solid fa-file-powerpoint"></i>
-                <span>Скачать PowerPoint (.pptx)</span>
+                <span>Скачать .PPTX</span>
             </button>
         </div>
     </header>
@@ -50,7 +57,7 @@
         <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-600/15 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <div id="slide-container" class="max-w-5xl w-full min-h-[480px] glass rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col justify-between relative z-10">
+        <div id="slide-container" class="max-w-5xl w-full min-h-[490px] glass rounded-3xl p-6 sm:p-12 shadow-2xl flex flex-col justify-between relative z-10">
             <!-- Контент генерируется через JS -->
         </div>
     </main>
@@ -61,7 +68,7 @@
             <i class="fa-solid fa-arrow-left"></i> Назад
         </button>
         <div class="text-xs text-slate-400 hidden md:block">
-            Используйте клавиши <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">←</kbd> и <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">→</kbd> для переключения слайдов
+            Листайте стрелками <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">←</kbd> <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-200">→</kbd> • Вставить картинку QR-кода можно через <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 text-emerald-400">Ctrl + V</kbd>
         </div>
         <button onclick="nextSlide()" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold transition flex items-center gap-2">
             Вперед <i class="fa-solid fa-arrow-right"></i>
@@ -115,7 +122,7 @@
                     { head: "📌 По доминирующей деятельности", text: "Практико-ориентированный (прикладной IT-проект)" },
                     { head: "📚 По предметной области", text: "Межпредметный (ОБЖ / ОБЗР + Информатика и ИКТ)" },
                     { head: "👤 По количеству участников", text: "Индивидуальный проект" },
-                    { head: "🗓️ Сроки реализации", text: "Среднесрочный: сентябрь 2025 г. — апрель 2026 г. (1 учебный год)" }
+                    { head: "🗓️ Сроки реализации", text: "Среднесрочный: сентябрь 2026 г. — апрель 2027 г. (1 учебный год)" }
                 ]
             },
             {
@@ -124,8 +131,8 @@
                 list: [
                     "1930–1980-е гг. (СССР): программы ПВХО, Гражданской обороны и НВП. Основной носитель знаний — печатные плакаты и бумажные уставы.",
                     "1991 год: в школах России введен предмет ОБЖ (Основы безопасности жизнедеятельности) при участии МЧС России.",
-                    "2024–2026 гг.: трансформация курса в предмет ОБЗР («Основы безопасности и защиты Родины»), появление модулей защиты от БПЛА.",
-                    "Современный этап: переход от статичных стендов на стене коридора к интерактивным цифровым тренажерам, доступным со смартфона за 2 секунды."
+                    "Современная реформа: трансформация курса в предмет ОБЗР («Основы безопасности и защиты Родины»), появление модулей защиты от БПЛА.",
+                    "Цифровой этап (2026–2027 гг.): переход от статичных стендов в коридоре к интерактивным веб-тренажерам, доступным со смартфона за 2 секунды."
                 ]
             },
             {
@@ -143,14 +150,14 @@
                 title: "Экономический расчет проекта",
                 cards: [
                     { head: "💻 Программное обеспечение — 0 руб.", text: "Использованы бесплатный редактор VS Code и открытые библиотеки (Tailwind CSS, FontAwesome, Confetti.js)." },
-                    { head: "🌐 Хостинг и публикация — 0 руб.", text: "Размещение на бесплатных образовательных платформах (GitHub Pages / Netlify)." },
+                    { head: "🌐 Хостинг и публикация — 0 руб.", text: "Размещение на бесплатной облачной платформе GitHub Pages." },
                     { head: "⚡ Электроэнергия — ~36 руб.", text: "30 часов работы компьютера × 0,2 кВт × 6 руб./кВт·ч = 36 рублей." },
                     { head: "💰 Экономическая выгода — до 40 000 руб.", text: "Заказ аналогичного SPA-портала в коммерческой веб-студии стоил бы школе от 30 000 до 45 000 рублей." }
                 ]
             },
             {
                 badge: "Пункт 9 • Этапы выполнения (Слайд 1 из 4)",
-                title: "Этап 1. Подготовительный и аналитический",
+                title: "Этап 1. Подготовительный (Сентябрь – Октябрь 2026 г.)",
                 list: [
                     "Определение темы, цели и задач проекта совместно с руководителем Маклаковой Инной Анатольевной.",
                     "Проведение анкетирования учащихся 7–11 классов и выявление самых сложных для запоминания тем.",
@@ -160,7 +167,7 @@
             },
             {
                 badge: "Пункт 9 • Этапы выполнения (Слайд 2 из 4)",
-                title: "Этап 2. Проектирование и UI/UX-дизайн",
+                title: "Этап 2. Проектирование и дизайн (Ноябрь – Декабрь 2026 г.)",
                 list: [
                     "Выбор архитектуры SPA (Single Page Application) — мгновенный переход между темами без перезагрузки браузера.",
                     "Разработка современного дизайна в стиле Glassmorphism (полупрозрачные карточки на темном фоне Dark UI).",
@@ -170,7 +177,7 @@
             },
             {
                 badge: "Пункт 9 • Этапы выполнения (Слайд 3 из 4)",
-                title: "Этап 3. Программирование и верстка",
+                title: "Этап 3. Программирование (Январь – Февраль 2027 г.)",
                 list: [
                     "Семантическая верстка структуры приложения на стандарте HTML5.",
                     "Стилизация интерфейса и анимаций с помощью CSS-фреймворка Tailwind CSS.",
@@ -180,11 +187,11 @@
             },
             {
                 badge: "Пункт 9 • Этапы выполнения (Слайд 4 из 4)",
-                title: "Этап 4. Геймификация, тестирование и запуск",
+                title: "Этап 4. Тестирование и запуск (Март – Апрель 2027 г.)",
                 list: [
                     "Разработка 21 проверочного вопроса (по 3 вопроса в конце каждого из 7 модулей) с разбором ошибок.",
                     "Создание интерактивного тренажера «Собери тревожный чемоданчик» и экстренной памятки «112 SOS».",
-                    "Настройка динамической шкалы «Готовность к ЧС» в шапке сайта.",
+                    "Публикация готового проекта в интернете на платформе GitHub Pages и генерация QR-кода.",
                     "Тестирование работы портала в разных браузерах и апробация на фокус-группе учеников."
                 ]
             },
@@ -217,18 +224,57 @@
                 ]
             },
             {
-                badge: "Пункт 13 • Итоги работы",
-                title: "Заключение и выводы",
+                badge: "Пункт 13 • Итоги работы и демонстрация",
+                title: "Заключение и ссылка на проект",
+                isFinalWithQR: true,
                 list: [
-                    "Поставленная цель достигнута, все 6 задач выполнены: создан функционирующий веб-портал «ОБЖ.ПРО».",
-                    "Практический эксперимент доказал: интерактивный формат с мини-тестами повышает усвоение алгоритмов безопасности более чем в 2,5–3 раза.",
-                    "Продукт полностью готов к использованию на уроках ОБЗР, классных часах и для самостоятельного изучения школьниками.",
-                    "Спасибо за внимание! Готов ответить на ваши вопросы."
+                    "Цель достигнута, все задачи выполнены: создан и опубликован интерактивный портал «ОБЖ.ПРО».",
+                    "Доказано: интерактивный формат с мини-тестами повышает усвоение правил безопасности в 2,5–3 раза.",
+                    "Сайт готов к применению на уроках ОБЗР, классных часах и для самостоятельной подготовки.",
+                    "Спасибо за внимание! Готов ответить на вопросы комиссии."
                 ]
             }
         ];
 
         let currentSlide = 0;
+        let qrCodeBase64 = localStorage.getItem('obzh_qr_image') || null;
+
+        function updateQRButtonStatus() {
+            const btnText = document.getElementById('qr-btn-text');
+            if (qrCodeBase64) {
+                btnText.innerHTML = '✓ QR-код загружен';
+            }
+        }
+
+        // Обработка загрузки файла QR-кода через кнопку
+        function handleQRUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            readQRFile(file);
+        }
+
+        // Обработка вставки картинки QR-кода через Ctrl + V
+        document.addEventListener('paste', (event) => {
+            const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+            for (const item of items) {
+                if (item.type.indexOf('image') === 0) {
+                    const file = item.getAsFile();
+                    readQRFile(file);
+                }
+            }
+        });
+
+        function readQRFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                qrCodeBase64 = e.target.result;
+                localStorage.setItem('obzh_qr_image', qrCodeBase64);
+                updateQRButtonStatus();
+                currentSlide = slides.length - 1; // Переходим сразу на 16-й слайд показать результат
+                renderSlide();
+            };
+            reader.readAsDataURL(file);
+        }
 
         function renderSlide() {
             const s = slides[currentSlide];
@@ -237,7 +283,7 @@
 
             if (s.isTitle) {
                 container.innerHTML = `
-                    <div class="slide-enter my-auto text-center space-y-6 py-8">
+                    <div class="slide-enter my-auto text-center space-y-6 py-6">
                         <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/15 text-orange-400 border border-orange-500/30">
                             ${s.badge}
                         </span>
@@ -261,7 +307,36 @@
             }
 
             let bodyHTML = '';
-            if (s.cards) {
+
+            if (s.isFinalWithQR) {
+                bodyHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6 items-center">
+                        <div class="md:col-span-7 space-y-3">
+                            ${s.list.map((item, idx) => `
+                                <div class="bg-slate-900/75 border border-slate-800 p-3.5 rounded-xl flex items-start gap-3.5">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">
+                                        ${idx + 1}
+                                    </span>
+                                    <span class="text-slate-200 text-xs sm:text-sm leading-relaxed">${item}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="md:col-span-5 bg-slate-900/90 border-2 border-dashed border-orange-500/40 rounded-2xl p-5 flex flex-col items-center text-center">
+                            <div onclick="document.getElementById('qr-file-input').click()" class="cursor-pointer bg-white p-3 rounded-2xl shadow-xl mb-3 w-48 h-48 flex items-center justify-center overflow-hidden group relative">
+                                ${qrCodeBase64 
+                                    ? `<img src="${qrCodeBase64}" alt="QR-код сайта" class="w-full h-full object-contain">`
+                                    : `<div class="text-slate-800 text-center p-2">
+                                        <i class="fa-solid fa-qrcode text-5xl text-orange-500 mb-2"></i>
+                                        <p class="text-[11px] font-bold leading-tight">Нажми сюда или нажми Ctrl+V, чтобы вставить свой QR-код с динозавриком</p>
+                                       </div>`
+                                }
+                            </div>
+                            <div class="font-extrabold text-white text-sm">Откройте сайт «ОБЖ.ПРО»</div>
+                            <div class="text-xs text-orange-400 mt-0.5">Наведите камеру телефона на QR-код</div>
+                        </div>
+                    </div>
+                `;
+            } else if (s.cards) {
                 bodyHTML = `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         ${s.cards.map(c => `
@@ -312,7 +387,7 @@
                     ${bodyHTML}
                 </div>
                 <div class="pt-6 mt-6 border-t border-slate-800/80 flex justify-between items-center text-xs text-slate-500">
-                    <span>Проект «ОБЖ.ПРО» • Забродин И. Е., 10 «А»</span>
+                    <span>Проект «ОБЖ.ПРО» • Забродин И. Е., 10 «А» (2026–2027 уч. год)</span>
                     <span>Руководитель: Маклакова И. А.</span>
                 </div>
             `;
@@ -330,7 +405,7 @@
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Генерация настоящего файла PowerPoint (.pptx)
+        // Генерация настоящего файла PowerPoint (.pptx) со встроенным QR-кодом
         function exportToPPTX() {
             const pptx = new PptxGenJS();
             pptx.layout = 'LAYOUT_16x9';
@@ -359,6 +434,47 @@
                     slide.addText(`Выполнил: ${s.author}\nРуководитель проекта: ${s.supervisor}`, {
                         x: 0.6, y: 4.1, w: 8.8, h: 1.0,
                         fontSize: 14, bold: true, color: 'F8FAFC', fill: { color: '1E293B' }, margin: 12, fontFace: 'Arial'
+                    });
+                } else if (s.isFinalWithQR) {
+                    slide.addText(s.title, {
+                        x: 0.6, y: 0.8, w: 8.8, h: 0.6,
+                        fontSize: 22, bold: true, color: 'FFFFFF', fontFace: 'Arial'
+                    });
+
+                    const bulletItems = s.list.map((item, idx) => ({
+                        text: `${idx + 1}. ${item}`,
+                        options: { fontSize: 12.5, color: 'F1F5F9', breakLine: true, paraSpaceAfter: 12 }
+                    }));
+                    slide.addText(bulletItems, {
+                        x: 0.6, y: 1.6, w: 5.5, h: 3.4,
+                        fill: { color: '1E293B' }, valign: 'top', margin: 14, fontFace: 'Arial'
+                    });
+
+                    // Подложка под QR-код справа
+                    slide.addShape(pptx.ShapeType.rect, {
+                        x: 6.3, y: 1.6, w: 3.1, h: 3.4, fill: { color: '1E293B' }
+                    });
+
+                    if (qrCodeBase64) {
+                        slide.addImage({
+                            data: qrCodeBase64,
+                            x: 6.65, y: 1.75, w: 2.4, h: 2.4
+                        });
+                    } else {
+                        slide.addText("Место для QR-кода\n(вставьте вашу картинку)", {
+                            x: 6.5, y: 2.2, w: 2.7, h: 1.5,
+                            fontSize: 12, color: '94A3B8', align: 'center', fontFace: 'Arial'
+                        });
+                    }
+
+                    slide.addText("Наведите камеру телефона,\nчтобы открыть сайт ОБЖ.ПРО", {
+                        x: 6.3, y: 4.25, w: 3.1, h: 0.6,
+                        fontSize: 10.5, bold: true, color: 'FB923C', align: 'center', fontFace: 'Arial'
+                    });
+
+                    slide.addText(`Забродин И. Е. (10 «А») | Руководитель: Маклакова И. А. | Слайд ${index + 1}`, {
+                        x: 0.6, y: 5.15, w: 8.8, h: 0.3,
+                        fontSize: 9, color: '64748B', fontFace: 'Arial'
                     });
                 } else {
                     slide.addText(s.title, {
@@ -418,6 +534,7 @@
             pptx.writeFile({ fileName: 'Проект_ОБЖ_Забродин_Илья_10А.pptx' });
         }
 
+        updateQRButtonStatus();
         renderSlide();
     </script>
 </body>
